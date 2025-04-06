@@ -20,7 +20,6 @@ export class TopbarComponent {
   logo = ``
 
   constructor() {
-    console.log(this.$isDarkMode())
     effect(() => {
       this.logo =  `./assets/${this.$isDarkMode() ? 'white' : 'black'}ollama.png`;
     });
