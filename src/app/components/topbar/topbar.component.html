@@ -4,6 +4,6 @@
     <p class="text-xl">Ollama Angular Chat</p>
   </div>
   <div class="">
-    <p-button severity="secondary" [icon]="isDarkMode ? 'pi pi-sun' : 'pi pi-moon'" (onClick)="toggleDarkMode()" [rounded]="true" [text]="true" />
+    <p-button severity="secondary" [icon]="$isDarkMode() ? 'pi pi-sun' : 'pi pi-moon'" (onClick)="toggle()" [rounded]="true" [text]="true" />
   </div>
 </div>

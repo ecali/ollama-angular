@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, effect, inject, OnInit} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
 import { ButtonModule} from 'primeng/button';
+import {ToggleService} from '../../services/toggle.service';
 
 @Component({
   selector: 'oa-topbar',
@@ -11,29 +12,29 @@ import { ButtonModule} from 'primeng/button';
   templateUrl: './topbar.component.html',
   styles: ``
 })
-export class TopbarComponent implements OnInit {
+export class TopbarComponent {
 
-  isDarkMode: boolean = true;
-  logo = `./assets/${this.isDarkMode ? 'black' : 'white'}ollama.png`
+  private readonly _toggleService = inject(ToggleService);
 
-  ngOnInit() {
-    this.toggleDarkMode() // set default to darkmode
+  $isDarkMode = this._toggleService.isDarkMode;
+  logo = ``
+
+  constructor() {
+    effect(() => {
+      this.logo =  `./assets/${this.$isDarkMode() ? 'black' : 'white'}ollama.png`;
+    });
   }
 
-  toggleDarkMode() {
-    const element = document.querySelector('html');
-    element?.classList.toggle('my-app-dark');
-    this.checkDarkMode();
-    this.handleLogo();
-  }
-
-  checkDarkMode() {
-    const element = document.querySelector('html');
-    this.isDarkMode = element?.classList.contains('my-app-dark') ?? false;
-  }
+  /*ngOnInit() {
+    this.logo =  `./assets/${this.$isDarkMode() ? 'white' : 'black'}ollama.png`;
+  }*/
 
   handleLogo() {
-    this.logo =  `./assets/${this.isDarkMode ? 'white' : 'black'}ollama.png`;
+    this.logo =  `./assets/${this.$isDarkMode() ? 'white' : 'black'}ollama.png`;
+  }
+
+  toggle() {
+    this._toggleService.toggle();
   }
 
 }
