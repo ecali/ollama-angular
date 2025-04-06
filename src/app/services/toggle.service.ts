@@ -5,9 +5,15 @@ import {Injectable, signal} from '@angular/core';
 })
 export class ToggleService {
 
-  constructor() { }
+  isDarkMode = signal<boolean>(true);
 
-  isDarkMode = signal<boolean>(false);
+
+  constructor() {
+    const element = document.querySelector('html');
+    if (!element?.classList.contains('dark-mode')) {
+      element?.classList.toggle('my-app-dark');
+    }
+  }
 
   async toggle(){
     const element = document.querySelector('html');

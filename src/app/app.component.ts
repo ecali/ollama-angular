@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component} from '@angular/core';
 import {ButtonModule} from 'primeng/button';
 import {TopbarComponent} from './components/topbar/topbar.component';
 import {FooterComponent} from './components/footer/footer.component';
@@ -12,5 +11,9 @@ import {ChatComponent} from './components/chat/chat.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+
   title = 'ollama-angular';
+  constructor() {
+  }
+
 }

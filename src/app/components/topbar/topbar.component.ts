@@ -20,21 +20,16 @@ export class TopbarComponent {
   logo = ``
 
   constructor() {
+    console.log(this.$isDarkMode())
     effect(() => {
-      this.logo =  `./assets/${this.$isDarkMode() ? 'black' : 'white'}ollama.png`;
+      this.logo =  `./assets/${this.$isDarkMode() ? 'white' : 'black'}ollama.png`;
     });
   }
 
-  /*ngOnInit() {
-    this.logo =  `./assets/${this.$isDarkMode() ? 'white' : 'black'}ollama.png`;
-  }*/
-
-  handleLogo() {
-    this.logo =  `./assets/${this.$isDarkMode() ? 'white' : 'black'}ollama.png`;
-  }
-
   toggle() {
-    this._toggleService.toggle();
+    this._toggleService.toggle().then(_ => {
+      this.logo =  `./assets/${this.$isDarkMode() ? 'white' : 'black'}ollama.png`;
+    });
   }
 
 }
