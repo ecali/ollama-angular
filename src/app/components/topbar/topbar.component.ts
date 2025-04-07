@@ -1,4 +1,4 @@
-import {Component, effect, inject, OnInit} from '@angular/core';
+import {Component, effect, inject, OnInit, signal} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
 import { ButtonModule} from 'primeng/button';
 import {ToggleService} from '../../services/toggle.service';
@@ -17,17 +17,17 @@ export class TopbarComponent {
   private readonly _toggleService = inject(ToggleService);
 
   $isDarkMode = this._toggleService.isDarkMode;
-  logo = ``
+  $logo = signal<string>(`./assets/${this.$isDarkMode() ? 'white' : 'black'}ollama.png`)
 
   constructor() {
     effect(() => {
-      this.logo =  `./assets/${this.$isDarkMode() ? 'white' : 'black'}ollama.png`;
+      this.$logo.set(`./assets/${this.$isDarkMode() ? 'white' : 'black'}ollama.png`)
     });
   }
 
   toggle() {
-    this._toggleService.toggle().then(_ => {
-      this.logo =  `./assets/${this.$isDarkMode() ? 'white' : 'black'}ollama.png`;
+    this._toggleService.toggle().finally(() => {
+      this.$logo.set(`./assets/${this.$isDarkMode() ? 'white' : 'black'}ollama.png`);
     });
   }
 

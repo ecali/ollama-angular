@@ -10,7 +10,7 @@
 
     @for (message of $messages(); track message.timestamp) {
       @if (message.author === MessageAuthor.bot) {
-        <div class="w-full flex gap-1 items-center">
+        <div class="w-full flex gap-1 items-end">
           <p-avatar [image]="botAvatar" [ngStyle]="{'background-color': '#A6F3D0'}" class="mr-2 bg-white" shape="circle" />
           <div class="w-1/2  bg-emerald-400 self-start p-2 rounded-xl">
             {{message.text}}
@@ -18,7 +18,7 @@
         </div>
 
       } @else {
-        <div class="w-full flex gap-1 items-center justify-start flex-row-reverse">
+        <div class="w-full flex gap-1 items-end justify-start flex-row-reverse">
           <p-avatar icon="pi pi-user"  shape="circle" />
           <div class="w-1/2  bg-gray-400 self-start p-2 rounded-xl">
             {{message.text}}
