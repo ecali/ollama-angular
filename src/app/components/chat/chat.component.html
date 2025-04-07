@@ -1,3 +1,4 @@
+
 <p-card [style]="{ width: '100%', overflow: 'hidden'}" >
   <ng-template #header>
     <div class="flex justify-center ">
@@ -8,15 +9,18 @@
   <ng-template #subtitle> </ng-template>
   <div class="min-h-[400px] h-[400px] max-h-full overflow-y-auto flex flex-col gap-4 snap-end will-change-scroll " #scrollMe [scrollTop]="scrollMe.scrollHeight">
 
-    @for (message of $messages(); track message.timestamp) {
+    @for (message of $messages(); track message.timestamp; let idx = $index) {
       @if (message.author === MessageAuthor.bot) {
         <div class="w-full flex gap-1 items-end">
           <p-avatar [image]="botAvatar" [ngStyle]="{'background-color': '#A6F3D0'}" class="mr-2 bg-white" shape="circle" />
           <div class="w-1/2  bg-emerald-400 self-start p-2 rounded-xl">
-            {{message.text}}
+            @if($loading() && idx === $messages().length){
+              <i class="pi pi-spin pi-cog" style="font-size: 2rem"></i>
+            } @else {
+              {{message.text}}
+            }
           </div>
         </div>
-
       } @else {
         <div class="w-full flex gap-1 items-end justify-start flex-row-reverse">
           <p-avatar icon="pi pi-user"  shape="circle" />
@@ -25,13 +29,18 @@
           </div>
         </div>
       }
+
     }
   </div>
 
   <ng-template #footer>
       <p-iconfield>
-        <input (keyup.enter)="generate(value)" pInputText [fluid]="true" [(ngModel)]="value" placeholder="Large" size="large" />
-        <p-inputicon class="pi pi-send" />
+        <textarea [disabled]="$loading()" (keyup.enter)="generate(value)" [autoResize]="true" rows="3" cols="30" pTextarea [(ngModel)]="value" [fluid]="true" ></textarea>
+        @if ($loading()) {
+          <p-inputicon class="pi pi-spin pi-cog" />
+        } @else {
+          <p-inputicon class="pi pi-send" />
+        }
       </p-iconfield>
   </ng-template>
 </p-card>
